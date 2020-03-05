@@ -7,8 +7,8 @@ using std::to_string;
 // Define data types
 struct player
 {
-  double x;
-  double y;
+  float x;
+  float y;
   double o;
 };
 struct window
@@ -22,7 +22,12 @@ struct point
   int x;
   int y;
 };
-double pi = 3.14159265358979323846;
+struct fpoint
+{
+  float x;
+  float y;
+};
+float pi = 3.14159265358979323846;
 int map[10][10] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -36,10 +41,10 @@ int map[10][10] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 // Function that computes rays
-double castRay(window w, player p, double d)
+float castRay(window w, player p, double d)
 {
   bool hit = false;
-  double len = 0;
+  float len = 0;
   while (!hit)
   {
     len += 0.1;
@@ -74,12 +79,12 @@ int main()
   while (true)
   {
     erase();
-    double resp[w.w];
+    float resp[w.w];
     for (int f = 0; f < w.w; f += 1)
     {
       double dir = p.o + (f * (w.fov / w.w));
       int hw = w.w / 2;
-      double dist = castRay(w, p, dir);
+      float dist = castRay(w, p, dir);
       resp[f] = w.h / pow(dist, 1.2);
     }
     string ch[w.w][w.h];
@@ -116,24 +121,42 @@ int main()
       return (0);
       break;
     }
-    double md = p.o + (w.fov / 2);
+    double md = p.o + (w.fov / 2.);
     if (a == 119)
     {
-      p.y += 0.2 * sin(md);
-      p.x += 0.2 * cos(md);
+      fpoint n;
+      n.y = p.y + 0.2 * sin(md);
+      n.x = p.x + 0.2 * cos(md);
+      point fn;
+      fn.x = floor(n.x);
+      fn.y = floor(n.y);
+      if (map[fn.x][fn.y] != 1)
+      {
+        p.x = n.x;
+        p.y = n.y;
+      }
     }
     else if (a == 115)
     {
-      p.y -= 0.2 * sin(md);
-      p.x -= 0.2 * cos(md);
+      fpoint n;
+      n.y = p.y + (-0.2) * sin(md);
+      n.x = p.x + (-0.2) * cos(md);
+      point fn;
+      fn.x = floor(n.x);
+      fn.y = floor(n.y);
+      if (map[fn.x][fn.y] != 1)
+      {
+        p.x = n.x;
+        p.y = n.y;
+      }
     }
     else if (a == 100)
     {
-      p.o += 0.2;
+      p.o += 0.08 * pi;
     }
     else if (a == 97)
     {
-      p.o -= 0.2;
+      p.o -= 0.08 * pi;
     }
     else
     {
