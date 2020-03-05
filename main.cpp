@@ -65,6 +65,19 @@ int main()
   initscr();
   noecho();
 
+  start_color();
+
+  // unsigned short red = 1;
+  // unsigned short green = 2;
+  // unsigned short blue = 3;
+
+  // init_pair(red, COLOR_RED, COLOR_RED);
+  // init_pair(green, COLOR_GREEN, COLOR_GREEN);
+  // init_pair(blue, COLOR_BLUE, COLOR_BLUE);
+
+  init_pair(1, COLOR_RED, COLOR_BLACK);
+  attron(COLOR_PAIR(1));
+
   // Define variables
   window w;
   w.fov = pi / 4.;
@@ -117,6 +130,7 @@ int main()
     int a = getch(); // D = 100; S = 115; A = 97; W = 119; ESC = 27
     if (a == 27)
     {
+      attroff(COLOR_PAIR(1));
       endwin();
       return (0);
       break;
