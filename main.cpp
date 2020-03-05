@@ -74,7 +74,7 @@ int main()
   player p;
   p.x = 1.5;
   p.y = 5;
-  p.o = 1. * pi;
+  p.o = 0;
 
   while (true)
   {
