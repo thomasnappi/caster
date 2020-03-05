@@ -1,2 +1,2 @@
 # caster
-A text raycaster in C++
+A text raycaster in C++ using ncurses.
