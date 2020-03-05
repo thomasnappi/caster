@@ -75,7 +75,7 @@ int main()
   // init_pair(green, COLOR_GREEN, COLOR_GREEN);
   // init_pair(blue, COLOR_BLUE, COLOR_BLUE);
 
-  init_pair(1, COLOR_RED, COLOR_BLACK);
+  init_pair(1, COLOR_GREEN, COLOR_BLACK);
   attron(COLOR_PAIR(1));
 
   // Define variables
@@ -100,19 +100,36 @@ int main()
       float dist = castRay(w, p, dir);
       resp[f] = w.h / pow(dist, 1.2);
     }
-    string ch[w.w][w.h];
+    int ch[w.w][w.h];
     for (int x = 0; x < w.w; x += 1)
     {
       int pp = floor((w.h - resp[x]) / 2.);
       for (int y = 0; y < w.h; y += 1)
       {
-        if (y < pp || y > w.h - pp)
+        // if (y < pp || y > w.h - pp)
+        // {
+        //   ch[x][y] = ".";
+        // }
+        if (y < pp)
         {
-          ch[x][y] = ".";
+          // attron(blue);
+          // printw(".");
+          // attroff(blue);
+          ch[x][y] = 1;
+        }
+        else if (y > w.h - pp)
+        {
+          // attron(green);
+          // printw(",");
+          // attroff(green);
+          ch[x][y] = 2;
         }
         else
         {
-          ch[x][y] = "B";
+          ch[x][y] = 3;
+          // attron(red);
+          // printw("B");
+          // attroff(red);
         }
       }
     }
@@ -121,11 +138,36 @@ int main()
     {
       for (int x = 0; x < w.w; x += 1)
       {
-        s += ch[x][y];
+        // s += ch[x][y];
+        switch (ch[x][y])
+        {
+        case 1:
+        {
+          // attron(blue);
+          printw(" ");
+          // attroff(blue);
+          break;
+        }
+        case 2:
+        {
+          // attron(green);
+          printw(",");
+          // attroff(green);
+          break;
+        }
+        case 3:
+        {
+          // attron(red);
+          addch(ACS_BLOCK);
+          // attroff(red);
+          break;
+        }
+        }
       }
-      s += "\n";
+      // s += "\n";
+      printw("\n");
     }
-    printw(s.c_str());
+    // printw(s.c_str());
     refresh();
     int a = getch(); // D = 100; S = 115; A = 97; W = 119; ESC = 27
     if (a == 27)
