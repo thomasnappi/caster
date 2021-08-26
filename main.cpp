@@ -176,7 +176,7 @@ int main()
     ////////////////////////////
 
     // Clear the screen so we can print new values
-    erase();
+    move(0,0);
 
     // Print from the values we just evaluated, but traverse rows -> cols
     for (int y = 0; y < w.h; y += 1)
